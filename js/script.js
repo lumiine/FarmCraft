@@ -35,7 +35,7 @@ function useToolsEvent() {
             else if (wateringCan.classList.contains("active") && fieldPart.classList.contains("farmland")) {
                 water(fieldPart);
             }
-            else if (seeds.classList.contains("active") && fieldPart.classList.contains("hydrated")) {
+            else if (seeds.classList.contains("active") && fieldPart.classList.contains("farmland")) {
                 sow(fieldPart);
             }
             else if (scythe.classList.contains("active") && fieldPart.dataset.seed === "7") {
@@ -70,9 +70,22 @@ function grow() {
     fieldParts.forEach(fieldPart => {
         let data = Number(fieldPart.dataset.seed);
         if (data > 0 && data < 7) {
-            fieldPart.dataset.seed = String(data + 1);
+            if(fieldPart.classList.contains("hydrated")) {
+                if(probability(0.3)){
+                    fieldPart.dataset.seed = String(data + 1);
+                }
+            }
+            else {
+                if(probability(0.05)){
+                    fieldPart.dataset.seed = String(data + 1);
+                }
+            }
         }
     });
+}
+
+function probability(n) {
+    return Math.random() < n;
 }
 
 window.addEventListener("load", generateFields);

@@ -21,48 +21,39 @@ function attachToolsEvent() {
     });
 }
 
-function plow() {
+function useToolsEvent() {
     const hoe = document.querySelector("#tool-hoe");
+    const wateringCan = document.querySelector("#tool-water");
+    const seeds = document.querySelector("#tool-sow");
     const fieldParts = document.querySelectorAll("field-part");
-
     fieldParts.forEach(fieldPart => {
         fieldPart.addEventListener("click", () => {
             if (hoe.classList.contains("active")) {
-                fieldPart.classList.remove("grass");
-                fieldPart.classList.add("farmland");
+                plow(fieldPart);
             }
-        })
-    })
-}
-
-function water() {
-    const water = document.querySelector("#tool-water");
-    const fieldParts = document.querySelectorAll("field-part");
-
-    fieldParts.forEach(fieldPart => {
-        fieldPart.addEventListener("click", () => {
-            if(water.classList.contains("active") && fieldPart.classList.contains("farmland")) {
-                fieldPart.classList.add("hydrated");
+            else if (wateringCan.classList.contains("active") && fieldPart.classList.contains("farmland")) {
+                water(fieldPart);
             }
-        })
-    })
-}
-
-function sow() {
-    const sow = document.querySelector("#tool-sow");
-    const fieldParts = document.querySelectorAll("field-part");
-
-    fieldParts.forEach(fieldPart => {
-        fieldPart.addEventListener("click", () => {
-            if(sow.classList.contains("active") && fieldPart.classList.contains("hydrated")) {
-                fieldPart.dataset.seed = "1";
+            else if (seeds.classList.contains("active") && fieldPart.classList.contains("hydrated")) {
+                sow(fieldPart);
             }
         });
     });
 }
 
+function plow(fieldPart) {
+    fieldPart.classList.remove("grass");
+    fieldPart.classList.add("farmland");
+}
+
+function water(fieldPart) {
+    fieldPart.classList.add("hydrated");
+}
+
+function sow(fieldPart) {
+    fieldPart.dataset.seed = "1";
+}
+
 window.addEventListener("load", generateFields);
 window.addEventListener("load", attachToolsEvent);
-window.addEventListener("load", plow);
-window.addEventListener("load", water);
-window.addEventListener("load", sow);
+window.addEventListener("load", useToolsEvent);

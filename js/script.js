@@ -25,6 +25,7 @@ function useToolsEvent() {
     const hoe = document.querySelector("#tool-hoe");
     const wateringCan = document.querySelector("#tool-water");
     const seeds = document.querySelector("#tool-sow");
+    const scythe = document.querySelector("#tool-harvest");
     const fieldParts = document.querySelectorAll("field-part");
     fieldParts.forEach(fieldPart => {
         fieldPart.addEventListener("click", () => {
@@ -36,6 +37,9 @@ function useToolsEvent() {
             }
             else if (seeds.classList.contains("active") && fieldPart.classList.contains("hydrated")) {
                 sow(fieldPart);
+            }
+            else if (scythe.classList.contains("active") && fieldPart.dataset.seed === "7") {
+                harvest(fieldPart);
             }
         });
     });
@@ -54,6 +58,25 @@ function sow(fieldPart) {
     fieldPart.dataset.seed = "1";
 }
 
+function harvest(fieldPart) {
+    fieldPart.classList.remove("farmland");
+    fieldPart.classList.remove("hydrated");
+    fieldPart.classList.add("grass");
+    fieldPart.dataset.seed = "0";
+}
+
+function grow() {
+    const fieldParts = document.querySelectorAll("field-part");
+    fieldParts.forEach(fieldPart => {
+        let data = Number(fieldPart.dataset.seed);
+        if (data > 0 && data < 7) {
+            fieldPart.dataset.seed = String(data + 1);
+        }
+    });
+}
+
 window.addEventListener("load", generateFields);
 window.addEventListener("load", attachToolsEvent);
 window.addEventListener("load", useToolsEvent);
+
+setInterval(grow, 1000);

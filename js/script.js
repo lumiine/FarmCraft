@@ -48,7 +48,21 @@ function water() {
     })
 }
 
+function sow() {
+    const sow = document.querySelector("#tool-sow");
+    const fieldParts = document.querySelectorAll("field-part");
+
+    fieldParts.forEach(fieldPart => {
+        fieldPart.addEventListener("click", () => {
+            if(sow.classList.contains("active") && fieldPart.classList.contains("hydrated")) {
+                fieldPart.dataset.seed = "1";
+            }
+        });
+    });
+}
+
 window.addEventListener("load", generateFields);
 window.addEventListener("load", attachToolsEvent);
 window.addEventListener("load", plow);
 window.addEventListener("load", water);
+window.addEventListener("load", sow);

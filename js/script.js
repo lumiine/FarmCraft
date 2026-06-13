@@ -38,7 +38,7 @@ function useToolsEvent() {
             else if (seeds.classList.contains("active") && fieldPart.classList.contains("farmland")) {
                 sow(fieldPart);
             }
-            else if (scythe.classList.contains("active") && fieldPart.dataset.seed === "7") {
+            else if (scythe.classList.contains("active")) {
                 harvest(fieldPart);
             }
         });
@@ -49,7 +49,7 @@ function plow(fieldPart) {
     fieldPart.classList.remove("grass");
     fieldPart.classList.add("farmland");
     setInterval(() => {
-        if (probability(0.01)) {
+        if (probability(0.01) && !fieldPart.classList.contains("hydrated")) {
             fieldPart.classList.remove("farmland");
             fieldPart.classList.add("grass");
         }
@@ -66,9 +66,13 @@ function sow(fieldPart) {
 }
 
 function harvest(fieldPart) {
+    let stock = document.querySelector("stock");
     fieldPart.classList.remove("farmland");
     fieldPart.classList.remove("hydrated");
     fieldPart.classList.add("grass");
+    if (fieldPart.dataset.seed === "7"){
+        stock.textContent = Number(stock.textContent) + 1;
+    }
     fieldPart.dataset.seed = "0";
 }
 

@@ -35,6 +35,20 @@ function plow() {
     })
 }
 
+function water() {
+    const water = document.querySelector("#tool-water");
+    const fieldParts = document.querySelectorAll("field-part");
+
+    fieldParts.forEach(fieldPart => {
+        fieldPart.addEventListener("click", () => {
+            if(water.classList.contains("active") && fieldPart.classList.contains("farmland")) {
+                fieldPart.classList.add("hydrated");
+            }
+        })
+    })
+}
+
 window.addEventListener("load", generateFields);
 window.addEventListener("load", attachToolsEvent);
 window.addEventListener("load", plow);
+window.addEventListener("load", water);

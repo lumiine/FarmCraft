@@ -48,10 +48,17 @@ function useToolsEvent() {
 function plow(fieldPart) {
     fieldPart.classList.remove("grass");
     fieldPart.classList.add("farmland");
+    setInterval(() => {
+        if (probability(0.01)) {
+            fieldPart.classList.remove("farmland");
+            fieldPart.classList.add("grass");
+        }
+    }, 1000);
 }
 
 function water(fieldPart) {
     fieldPart.classList.add("hydrated");
+    setInterval(() => {fieldPart.classList.remove("hydrated");}, 20000);
 }
 
 function sow(fieldPart) {

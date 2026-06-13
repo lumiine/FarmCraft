@@ -7,4 +7,19 @@ function generateFields() {
     }
 }
 
+function attachToolsEvent() {
+    let lastTool = null;
+    const tools = document.querySelectorAll("tool");
+    tools.forEach(tool => {
+        tool.addEventListener("click", () => {
+            tool.classList.add("active");
+            if (lastTool) {
+                lastTool.classList.remove("active");
+            }
+            lastTool = tool;
+        });
+    });
+}
+
 window.addEventListener("load", generateFields);
+window.addEventListener("load", attachToolsEvent);
